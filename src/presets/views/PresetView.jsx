@@ -50,12 +50,14 @@ export const PresetView = () => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell align='center' >Cantidad (kg)</TableCell>
+                                        <TableCell align='center' >Temperatura de referencia (C°)</TableCell>
                                         <TableCell align='center' >Tiempo de tostado (min)</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align='center' >10</TableCell>
+                                        <TableCell align='center' >80</TableCell>
                                         <TableCell align='center' >15</TableCell>
                                     </TableRow>
                                 </TableBody>
