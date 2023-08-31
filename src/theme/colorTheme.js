@@ -11,6 +11,9 @@ export const colorTheme = createTheme({
         },
         error: {
             main: red.A400
+        },
+        shadow: {
+            main: '#F1F1F1'
         }
     }
 })

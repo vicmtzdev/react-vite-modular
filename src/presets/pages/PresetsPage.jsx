@@ -1,11 +1,13 @@
-import { Typography } from '@mui/material';
+import { PresetsLayout } from '../layout/PresetsLayout';
+import { NothingSelectedView, PresetView } from '../views';
 
 export const PresetsPage = () => {
   return (
-    <>
-    
-        <Typography variant='h1' >PresetsPage</Typography>
-    
-    </>
+    <PresetsLayout>
+
+      {/* <NothingSelectedView /> */}
+      <PresetView />
+
+    </PresetsLayout>
   )
 }
