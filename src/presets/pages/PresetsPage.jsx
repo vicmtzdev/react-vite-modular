@@ -5,8 +5,9 @@ export const PresetsPage = () => {
   return (
     <PresetsLayout>
 
-      {/* <NothingSelectedView /> */}
-      <PresetView />
+      <NothingSelectedView />
+      {/* <PresetView /> */}
+
 
     </PresetsLayout>
   )

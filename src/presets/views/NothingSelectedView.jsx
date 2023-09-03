@@ -1,4 +1,5 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { AddOutlined } from '@mui/icons-material';
+import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, IconButton } from '@mui/material';
 
 const dataFicticia = [
     {
@@ -41,35 +42,54 @@ const dataFicticia = [
 
 export const NothingSelectedView = () => {
     return (
+        <>
 
-        <Grid container gap={4} direction='row' justifyContent='space-around' alignItems='flex-start' >
+            <Grid container gap={4} direction='row' justifyContent='space-around' alignItems='flex-start' >
 
-            {
-                dataFicticia.map(card => (
-                    <Grid item xs={3} key={card.id}>
-                        <Card sx={{ maxWidth: 345, maxHeight: 300 }}>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={card.imageUrl}
-                                    alt="kind of grain"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {card.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {card.description}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                        </Card>
-                    </Grid>
-                ))
-            }
+                {
+                    dataFicticia.map(card => (
+                        <Grid item xs={3} key={card.id}>
+                            <Card sx={{ maxWidth: 345, maxHeight: 300 }}>
+                                <CardActionArea>
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={card.imageUrl}
+                                        alt="kind of grain"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {card.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {card.description}
+                                        </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                            </Card>
+                        </Grid>
+                    ))
+                }
 
-        </Grid>
+            </Grid>
+
+            <IconButton
+                size='large'
+                sx={{
+                    color: 'white',
+                    backgroundColor: 'matchone.main',
+                    ':hover': { backgroundColor: 'matchone.main', opacity: 0.9 },
+                    position: 'fixed',
+                    right: 70,
+                    bottom: 40
+                }}
+            >
+
+                <AddOutlined sx={{ fontSize: 30 }} />
+
+            </IconButton>
+
+        </>
 
 
 

@@ -1,4 +1,4 @@
-import { DeleteOutline, Edit, PlayArrow } from '@mui/icons-material';
+import { ArrowBack, DeleteOutline, Edit, PlayArrow } from '@mui/icons-material';
 import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 export const PresetView = () => {
@@ -12,6 +12,11 @@ export const PresetView = () => {
 
 
                 <Grid item>
+
+                    <IconButton>
+                        <ArrowBack fontSize="large" sx={{ color: 'matchone.main' }} />
+                    </IconButton>
+
                     <IconButton>
                         <DeleteOutline fontSize="large" color="error" />
                     </IconButton>

@@ -14,6 +14,9 @@ export const colorTheme = createTheme({
         },
         shadow: {
             main: '#F1F1F1'
-        }
+        },
+        matchone: {
+            main: '#0D5298'
+        },
     }
 })
