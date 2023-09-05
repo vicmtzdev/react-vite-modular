@@ -1,7 +1,14 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
-import { ArrowRight, ChevronRight } from '@mui/icons-material';
+import { ChevronRight } from '@mui/icons-material';
+import { usePresetsStore, useUiStore } from '../../hooks';
 
 export const SideBar = ({ drawerWidth = 240 }) => {
+
+    const { presets, setActiveEvent } = usePresetsStore();
+    const { isPresetModalOpen } = useUiStore();
+
+
+
     return (
         <Box
             component='nav'
@@ -18,21 +25,21 @@ export const SideBar = ({ drawerWidth = 240 }) => {
             >
 
                 <Toolbar>
-                    <Typography variant='h6' noWrap component='div' >Presets de Victor Martinez</Typography>
+                    <Typography variant='h6' noWrap component='div' >{`Presets de Victor Martinez`}</Typography>
                 </Toolbar>
                 <Divider />
 
                 <List>
                     {
-                        ['Almendra', 'Cebada', 'Cacahuate', 'Cacao', 'Chile', 'Maiz'].map(text => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
+                        presets.map(text => (
+                            <ListItem key={text._id} disablePadding>
+                                <ListItemButton onClick={({ event }) => setActiveEvent(text)} disabled={isPresetModalOpen} >
                                     <ListItemIcon>
                                         <ChevronRight sx={{ fontSize: 35 }} color="primary" />
                                     </ListItemIcon>
                                     <Grid container>
-                                        <ListItemText primary={text} />
-                                        <ListItemText secondary={'Nota: Lorem ipsum...'} />
+                                        <ListItemText primary={text.title} />
+                                        <ListItemText secondary={`Nota: ${(text.description.length > 14) ? text.description.substring(0, 14) + '...' : text.description}`} />
                                     </Grid>
                                 </ListItemButton>
                             </ListItem>

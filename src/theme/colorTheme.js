@@ -16,7 +16,13 @@ export const colorTheme = createTheme({
             main: '#F1F1F1'
         },
         matchone: {
+            main: '#004083'
+        },
+        matchtwo: {
             main: '#0D5298'
+        },
+        selected: {
+            main: '#0D983D'
         },
     }
 })

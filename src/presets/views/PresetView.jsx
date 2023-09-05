@@ -1,19 +1,25 @@
 import { ArrowBack, DeleteOutline, Edit, PlayArrow } from '@mui/icons-material';
 import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-export const PresetView = () => {
+import { usePresetsStore, useUiStore } from '../../hooks';
+
+export const PresetView = ({ activePreset }) => {
+
+    const { setNullEvent } = usePresetsStore();
+    const { isPresetModalOpen, openPresetModal } = useUiStore();
+
     return (
         <>
             <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1 }} >
                 <Grid item >
-                    <Typography fontSize={39} fontWeight='light'>Preset para tostado de Almendra</Typography>
+                    <Typography fontSize={39} fontWeight='light'>{`Preset para tostado de ${activePreset.title}`}</Typography>
                 </Grid>
 
 
 
                 <Grid item>
 
-                    <IconButton>
+                    <IconButton onClick={setNullEvent} >
                         <ArrowBack fontSize="large" sx={{ color: 'matchone.main' }} />
                     </IconButton>
 
@@ -21,7 +27,7 @@ export const PresetView = () => {
                         <DeleteOutline fontSize="large" color="error" />
                     </IconButton>
 
-                    <IconButton>
+                    <IconButton onClick={openPresetModal} >
                         <Edit fontSize="large" color="success" />
                     </IconButton>
 
@@ -37,17 +43,17 @@ export const PresetView = () => {
                     <CardMedia
                         component="img"
                         height="240"
-                        image="https://images.unsplash.com/photo-1583126379180-ec70bb3178b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YWxtb25kfGVufDB8fDB8fHww&w=1000&q=80"
-                        alt="almendra"
+                        image={activePreset.photo}
+                        alt={activePreset.title}
                     />
                     <CardContent>
 
                         <Typography gutterBottom variant="h5" component="div" sx={{}} >
-                            Almendra
+                            {activePreset.title}
                         </Typography>
 
                         <Typography variant="body2" color="text.secondary" sx={{}}>
-                            Las almendras son buenas para la salud y muy ricas en nutrimentos, este preset de tostado es de 10 minutos lo cual logra una buena consistencia en el tostado.
+                            {activePreset.description}
                         </Typography>
 
                         <TableContainer component={Paper} sx={{ mt: 2, backgroundColor: 'shadow.main' }}>
@@ -61,9 +67,9 @@ export const PresetView = () => {
                                 </TableHead>
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell align='center' >10</TableCell>
-                                        <TableCell align='center' >80</TableCell>
-                                        <TableCell align='center' >15</TableCell>
+                                        <TableCell align='center' >{activePreset.amount}</TableCell>
+                                        <TableCell align='center' >{activePreset.temperature}</TableCell>
+                                        <TableCell align='center' >{activePreset.time}</TableCell>
                                     </TableRow>
                                 </TableBody>
                             </Table>
