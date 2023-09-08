@@ -5,8 +5,8 @@ import { usePresetsStore, useUiStore } from '../../hooks';
 
 export const PresetView = ({ activePreset }) => {
 
-    const { setNullEvent } = usePresetsStore();
-    const { isPresetModalOpen, openPresetModal } = useUiStore();
+    const { setNullEvent, startDeletingEvent } = usePresetsStore();
+    const { openPresetModal } = useUiStore();
 
     return (
         <>
@@ -23,7 +23,7 @@ export const PresetView = ({ activePreset }) => {
                         <ArrowBack fontSize="large" sx={{ color: 'matchone.main' }} />
                     </IconButton>
 
-                    <IconButton>
+                    <IconButton onClick={startDeletingEvent} >
                         <DeleteOutline fontSize="large" color="error" />
                     </IconButton>
 

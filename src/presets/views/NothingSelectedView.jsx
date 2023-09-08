@@ -44,8 +44,13 @@ import { usePresetsStore, useUiStore } from '../../hooks';
 
 export const NothingSelectedView = () => {
 
-    const { presets, setActiveEvent } = usePresetsStore();
+    const { presets, setActiveEvent, setNullEvent } = usePresetsStore();
     const { openPresetModal } = useUiStore();
+
+    const handleClickNew = () => {
+        setNullEvent();
+        openPresetModal();
+    }
 
     return (
         <>
@@ -89,7 +94,7 @@ export const NothingSelectedView = () => {
                     right: 70,
                     bottom: 40
                 }}
-                onClick={openPresetModal}
+                onClick={handleClickNew}
             >
 
                 <AddOutlined sx={{ fontSize: 30 }} />

@@ -22,7 +22,7 @@ Modal.setAppElement('#root');
 export const PresetsModal = () => {
 
     const { isPresetModalOpen, closePresetModal } = useUiStore();
-    const { activePreset } = usePresetsStore();
+    const { activePreset, startSavingEvent } = usePresetsStore();
 
     const [formSubmitted, setFormSubmitted] = useState(false)
 
@@ -86,6 +86,19 @@ export const PresetsModal = () => {
     useEffect(() => {
         if (activePreset !== null) {
             setFormValues({ ...activePreset });
+        } else {
+            setFormValues({
+                title: '',
+                description: '',
+                amount: 0,
+                temperature: 0,
+                time: 0,
+                photo: '',
+                user: {
+                    _id: '123',
+                    name: 'Victor'
+                }
+            })
         }
 
     }, [activePreset])
@@ -115,7 +128,7 @@ export const PresetsModal = () => {
         })
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault();
         setFormSubmitted(true);
 
@@ -127,8 +140,11 @@ export const PresetsModal = () => {
         if (formValues.photo.length <= 0) return;
 
         console.log(formValues);
-        //TODO: Cerrar modal, remover errores en pantalla, hacer propagacion a backend
 
+        //TODO: 
+        await startSavingEvent(formValues);
+        closePresetModal();
+        setFormSubmitted(false);
     }
 
     return (

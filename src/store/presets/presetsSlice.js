@@ -56,9 +56,31 @@ export const presetsSlice = createSlice({
         onSetNullEvent: (state) => {
             state.activePreset = null;
         },
+        onAddNewEvent: (state, { payload }) => {
+            state.presets.push(payload);
+            state.activePreset = null;
+        },
+        onUpdateEvent: (state, { payload }) => {
+            state.presets = state.presets.map(event => {
+
+                if (event._id === payload._id) {
+                    return payload;
+                }
+
+                return event;
+
+            });
+            state.activePreset = payload;
+        },
+        onDeleteEvent: (state) => {
+            if (state.activePreset) {
+                state.presets = state.presets.filter(event => event._id !== state.activePreset._id);
+                state.activePreset = null;
+            }
+        },
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onSetNullEvent } = presetsSlice.actions;
+export const { onSetActiveEvent, onSetNullEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } = presetsSlice.actions;
