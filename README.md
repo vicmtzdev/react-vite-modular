@@ -13,7 +13,7 @@ You will probably have to install other dependencies like:
 
 1. React router dom: ``` https://reactrouter.com/en/main/start/tutorial ```
 2. Material ui: ``` https://mui.com/material-ui/ ``` (Download the icon and font packs too)
-3. Redeux and redux toolkit: ``` https://redux-toolkit.js.org/tutorials/quick-start ```
+3. Redux and redux toolkit: ``` https://redux-toolkit.js.org/tutorials/quick-start ```
 4. React modal: ``` https://www.npmjs.com/package/react-modal ```
 
 
