@@ -121,11 +121,42 @@ export const PresetsModal = () => {
     }
 
 
-    const onFileInputChange = ({ target }) => {
-        setFormValues({
-            ...formValues,
-            photo: target.files[0].name,
-        })
+    const onFileInputChange = async ({ target }) => {
+
+        if (target.files === 0) return;
+
+
+        //* Inicio de subida de archivos
+
+        const file = target.files[0];
+        const cloudUrl = 'https://api.cloudinary.com/v1_1/dtcdotyjq/upload';
+
+        const formData = new FormData();
+        formData.append('upload_preset', 'react-modular');
+        formData.append('file', file);
+
+        try {
+
+            const resp = await fetch(cloudUrl, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!resp.ok) throw new Error('Aqui esta el peo');
+
+            const cloudResp = await resp.json();
+
+            setFormValues({
+                ...formValues,
+                photo: cloudResp.secure_url,
+            })
+
+        } catch (error) {
+            throw new Error(error.message);
+        }
+
+        //* Fin de subida de archivos
+
     }
 
     const onSubmit = async (event) => {
@@ -139,7 +170,7 @@ export const PresetsModal = () => {
         if (formValues.time.length <= 0 || formValues.time <= 0) return;
         if (formValues.photo.length <= 0) return;
 
-        console.log(formValues);
+        // console.log(formValues);
 
         //TODO: 
         await startSavingEvent(formValues);
