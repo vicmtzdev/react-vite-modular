@@ -24,5 +24,8 @@ export const colorTheme = createTheme({
         selected: {
             main: '#0D983D'
         },
+        disabled: {
+            main: '#E0E0E0'
+        },
     }
 })

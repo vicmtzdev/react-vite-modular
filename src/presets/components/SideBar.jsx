@@ -1,12 +1,12 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
-import { usePresetsStore, useUiStore } from '../../hooks';
+import { usePresetsStore, useUiStore, useControlStore } from '../../hooks';
 
 export const SideBar = ({ drawerWidth = 240 }) => {
 
     const { presets, setActiveEvent } = usePresetsStore();
     const { isPresetModalOpen } = useUiStore();
-
+    const { setTemperature, machineIsWorking, machineIsHeating } = useControlStore();
 
 
     return (
@@ -33,7 +33,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                     {
                         presets.map(text => (
                             <ListItem key={text._id} disablePadding>
-                                <ListItemButton onClick={({ event }) => setActiveEvent(text)} disabled={isPresetModalOpen} >
+                                <ListItemButton onClick={({ event }) => { setActiveEvent(text), setTemperature(text.temperature) }} disabled={isPresetModalOpen || machineIsWorking || machineIsHeating} >
                                     <ListItemIcon>
                                         <ChevronRight sx={{ fontSize: 35 }} color="primary" />
                                     </ListItemIcon>

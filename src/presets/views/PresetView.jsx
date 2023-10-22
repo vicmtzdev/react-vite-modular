@@ -1,40 +1,53 @@
-import { ArrowBack, DeleteOutline, Edit, PlayArrow } from '@mui/icons-material';
+import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop } from '@mui/icons-material';
 import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-import { usePresetsStore, useUiStore } from '../../hooks';
+import { useControlStore, usePresetsStore, useUiStore } from '../../hooks';
 
 export const PresetView = ({ activePreset }) => {
 
     const { setNullEvent, startDeletingEvent } = usePresetsStore();
     const { openPresetModal } = useUiStore();
+    const { startHeat, startWork, stopOperation, machineIsWorking, machineIsHeating } = useControlStore();
+
 
     return (
-        <>
+        <> 
+
             <Grid container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1 }} >
                 <Grid item >
                     <Typography fontSize={39} fontWeight='light'>{`Preset para tostado de ${activePreset.title}`}</Typography>
                 </Grid>
 
 
-
                 <Grid item>
 
-                    <IconButton onClick={setNullEvent} >
-                        <ArrowBack fontSize="large" sx={{ color: 'matchone.main' }} />
+                    <IconButton onClick={setNullEvent} disabled={machineIsWorking || machineIsHeating} >
+                        <ArrowBack fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'matchone'} />
                     </IconButton>
 
-                    <IconButton onClick={startDeletingEvent} >
-                        <DeleteOutline fontSize="large" color="error" />
+                    <IconButton onClick={startDeletingEvent} disabled={machineIsWorking || machineIsHeating} >
+                        <DeleteOutline fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'error'} />
                     </IconButton>
 
-                    <IconButton onClick={openPresetModal} >
-                        <Edit fontSize="large" color="success" />
+                    <IconButton onClick={openPresetModal} disabled={machineIsWorking || machineIsHeating} >
+                        <Edit fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'success'} />
                     </IconButton>
 
-                    <Button variant='contained' color='primary' sx={{ padding: 1, pl: 2, ml: 1 }} >
+                    <Button variant='contained' color='primary' onClick={startHeat} disabled={machineIsWorking || machineIsHeating} sx={{ padding: 1, pl: 2, ml: 1 }} >
+                        <Typography>Heat</Typography>
+                        <Thermostat sx={{ fontSize: 30, ml: 0.1 }} />
+                    </Button>
+
+                    <Button variant='contained' color='success' onClick={startWork} disabled={machineIsWorking} sx={{ padding: 1, pl: 2, ml: 1 }} >
                         <Typography>Start</Typography>
                         <PlayArrow sx={{ fontSize: 30, ml: 0.1 }} />
                     </Button>
+
+                    <Button variant='contained' color='error' onClick={stopOperation} sx={{ padding: 1, pl: 2, ml: 1 }} >
+                        <Typography>Stop</Typography>
+                        <Stop sx={{ fontSize: 30, ml: 0.1 }} />
+                    </Button>
+
                 </Grid>
             </Grid>
 
