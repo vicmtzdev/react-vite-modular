@@ -1,13 +1,14 @@
 import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop } from '@mui/icons-material';
 import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-import { useControlStore, usePresetsStore, useUiStore } from '../../hooks';
+import { useControlStore, useCustomTimer, usePresetsStore, useUiStore } from '../../hooks';
 
 export const PresetView = ({ activePreset }) => {
 
     const { setNullEvent, startDeletingEvent } = usePresetsStore();
     const { openPresetModal } = useUiStore();
     const { startHeat, startWork, stopOperation, machineIsWorking, machineIsHeating } = useControlStore();
+    const { secondsLeft, startTimer } = useCustomTimer();
 
 
     return (
@@ -38,8 +39,8 @@ export const PresetView = ({ activePreset }) => {
                         <Thermostat sx={{ fontSize: 30, ml: 0.1 }} />
                     </Button>
 
-                    <Button variant='contained' color='success' onClick={startWork} disabled={machineIsWorking} sx={{ padding: 1, pl: 2, ml: 1 }} >
-                        <Typography>Start</Typography>
+                    <Button variant='contained' color='success' onClick={() => { startTimer(15) }} disabled={machineIsWorking} sx={{ padding: 1, pl: 2, ml: 1 }} >
+                        <Typography color={machineIsWorking ? 'error.main' : ''} >{machineIsWorking ? secondsLeft : 'Start'}</Typography>
                         <PlayArrow sx={{ fontSize: 30, ml: 0.1 }} />
                     </Button>
 
@@ -91,7 +92,6 @@ export const PresetView = ({ activePreset }) => {
                     </CardContent>
                 </CardActionArea>
             </Card>
-
 
         </>
 
