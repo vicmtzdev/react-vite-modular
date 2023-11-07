@@ -1,14 +1,15 @@
-import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop } from '@mui/icons-material';
+import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop, South } from '@mui/icons-material';
 import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
-import { useControlStore, useCustomTimer, usePresetsStore, useUiStore } from '../../hooks';
+import { useControlStore, useCustomTimer, usePresetsStore, useUiStore, useCustomTimerTakeOut } from '../../hooks';
 
 export const PresetView = ({ activePreset }) => {
 
     const { setNullEvent, startDeletingEvent } = usePresetsStore();
     const { openPresetModal } = useUiStore();
-    const { startHeat, startWork, stopOperation, machineIsWorking, machineIsHeating } = useControlStore();
-    const { secondsLeft, startTimer } = useCustomTimer();
+    const { startHeat, stopOperation, startTakeOut, machineIsWorking, machineIsHeating, machineIsTakingOut } = useControlStore();
+    const { minutesLeft, secondsLeft, startTimer } = useCustomTimer();
+    const { minutesLeftTakeOut, secondsLeftTakeOut, startTimerTakeOut } = useCustomTimerTakeOut();
 
 
     return (
@@ -22,26 +23,30 @@ export const PresetView = ({ activePreset }) => {
 
                 <Grid item>
 
-                    <IconButton onClick={setNullEvent} disabled={machineIsWorking || machineIsHeating} >
-                        <ArrowBack fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'matchone'} />
+                    <IconButton onClick={setNullEvent} disabled={machineIsWorking || machineIsHeating || machineIsTakingOut} >
+                        <ArrowBack fontSize="large" color={(machineIsWorking || machineIsHeating || machineIsTakingOut) ? 'disabled' : 'matchone'} />
                     </IconButton>
 
-                    <IconButton onClick={startDeletingEvent} disabled={machineIsWorking || machineIsHeating} >
-                        <DeleteOutline fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'error'} />
+                    <IconButton onClick={startDeletingEvent} disabled={machineIsWorking || machineIsHeating || machineIsTakingOut} >
+                        <DeleteOutline fontSize="large" color={(machineIsWorking || machineIsHeating || machineIsTakingOut) ? 'disabled' : 'error'} />
                     </IconButton>
 
-                    <IconButton onClick={openPresetModal} disabled={machineIsWorking || machineIsHeating} >
-                        <Edit fontSize="large" color={(machineIsWorking || machineIsHeating) ? 'disabled' : 'success'} />
+                    <IconButton onClick={openPresetModal} disabled={machineIsWorking || machineIsHeating || machineIsTakingOut} >
+                        <Edit fontSize="large" color={(machineIsWorking || machineIsHeating || machineIsTakingOut) ? 'disabled' : 'success'} />
                     </IconButton>
 
-                    <Button variant='contained' color='primary' onClick={startHeat} disabled={machineIsWorking || machineIsHeating} sx={{ padding: 1, pl: 2, ml: 1 }} >
+                    <Button variant='contained' color='primary' onClick={startHeat} disabled={machineIsWorking || machineIsHeating || machineIsTakingOut} sx={{ padding: 1, pl: 2, ml: 1 }} >
                         <Typography>Heat</Typography>
                         <Thermostat sx={{ fontSize: 30, ml: 0.1 }} />
                     </Button>
 
-                    <Button variant='contained' color='success' onClick={() => { startTimer(15) }} disabled={machineIsWorking} sx={{ padding: 1, pl: 2, ml: 1 }} >
-                        <Typography color={machineIsWorking ? 'error.main' : ''} >{machineIsWorking ? secondsLeft : 'Start'}</Typography>
+                    <Button variant='contained' color='success' onClick={() => { startTimer(activePreset.time) }} disabled={machineIsWorking || machineIsTakingOut} sx={{ padding: 1, pl: 2, ml: 1 }} >
+                        <Typography color={machineIsWorking ? 'error.main' : ''} >{machineIsWorking ? `${(minutesLeft <= 9) ? '0' + minutesLeft : minutesLeft} : ${(secondsLeft <= 9) ? '0' + secondsLeft : secondsLeft} ` : 'Start'}</Typography>
                         <PlayArrow sx={{ fontSize: 30, ml: 0.1 }} />
+                    </Button>
+
+                    <Button variant='contained' color='matchone' onClick={startTakeOut} disabled={machineIsHeating || machineIsWorking || machineIsTakingOut} sx={{ padding: 1, ml: 1 }} >
+                        <South sx={{ fontSize: 30, color: 'white' }} />
                     </Button>
 
                     <Button variant='contained' color='error' onClick={stopOperation} sx={{ padding: 1, pl: 2, ml: 1 }} >

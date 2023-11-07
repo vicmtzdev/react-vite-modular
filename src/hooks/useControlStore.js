@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onMachineIsHeating, onMachineIsStopped, onMachineIsWorking, onSetReferenceTemperature } from '../store';
+import { onMachineIsHeating, onMachineIsStopped, onMachineIsTakingOut, onMachineIsWorking, onSetReferenceTemperature } from '../store';
 
 export const useControlStore = () => {
 
     const dispatch = useDispatch();
-    const { machineIsHeating, machineIsWorking, referenceTemperature } = useSelector(state => state.control);
+    const { machineIsHeating, machineIsWorking, machineIsTakingOut, referenceTemperature } = useSelector(state => state.control);
 
 
     const startHeat = () => {
@@ -15,6 +15,11 @@ export const useControlStore = () => {
     const startWork = () => {
         //TODO: Llegar al backend, todo bien...
         dispatch(onMachineIsWorking());
+    }
+
+    const startTakeOut = () => {
+        //TODO: Llegar al backend, todo bien...
+        dispatch(onMachineIsTakingOut());
     }
 
     const stopOperation = () => {
@@ -33,11 +38,13 @@ export const useControlStore = () => {
         //* Propiedades
         machineIsHeating,
         machineIsWorking,
+        machineIsTakingOut,
         referenceTemperature,
 
         //* Métodos
         startHeat,
         startWork,
+        startTakeOut,
         stopOperation,
         setTemperature,
 
