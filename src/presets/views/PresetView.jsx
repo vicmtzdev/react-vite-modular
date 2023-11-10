@@ -1,5 +1,5 @@
-import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop, South } from '@mui/icons-material';
-import { Button, Card, CardActionArea, CardContent, CardMedia, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop, South, Opacity } from '@mui/icons-material';
+import { Alert, Button, Card, CardActionArea, CardContent, CardMedia, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 import { useControlStore, useCustomTimer, usePresetsStore, useUiStore, useCustomTimerTakeOut } from '../../hooks';
 
@@ -45,7 +45,7 @@ export const PresetView = ({ activePreset }) => {
                         <PlayArrow sx={{ fontSize: 30, ml: 0.1 }} />
                     </Button>
 
-                    <Button variant='contained' color='matchone' onClick={startTakeOut} disabled={machineIsHeating || machineIsWorking || machineIsTakingOut} sx={{ padding: 1, ml: 1 }} >
+                    <Button variant='contained' color='matchone' onClick={() => { startTimerTakeOut(3) }} disabled={machineIsHeating || machineIsWorking || machineIsTakingOut} sx={{ padding: 1, ml: 1 }} >
                         <South sx={{ fontSize: 30, color: 'white' }} />
                     </Button>
 
@@ -97,6 +97,12 @@ export const PresetView = ({ activePreset }) => {
                     </CardContent>
                 </CardActionArea>
             </Card>
+
+            <br />
+
+            <Collapse in={machineIsTakingOut}>
+                <Alert variant="filled" severity="success"> <strong> Puedes retirar el producto de la maquina, restan &nbsp;{(minutesLeftTakeOut <= 9) ? '0' + minutesLeftTakeOut : minutesLeftTakeOut} : {(secondsLeftTakeOut <= 9) ? '0' + secondsLeftTakeOut : secondsLeftTakeOut} &nbsp;{(minutesLeftTakeOut < 1) ? 'segundos' : 'minutos'} </strong> </Alert>
+            </Collapse>
 
         </>
 

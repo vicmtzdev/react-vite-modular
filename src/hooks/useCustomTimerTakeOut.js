@@ -13,6 +13,7 @@ export const useCustomTimerTakeOut = () => {
 
         if (!machineIsTakingOut) {
             setSecondsLeftTakeOut(0);
+            setMinutesLeftTakeOut(0);
         }
 
         if ((minutesLeftTakeOut <= 0) && (secondsLeftTakeOut <= 0)) {

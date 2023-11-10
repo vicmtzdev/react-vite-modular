@@ -1,13 +1,14 @@
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material';
 import { ChevronRight } from '@mui/icons-material';
-import { usePresetsStore, useUiStore, useControlStore } from '../../hooks';
+import { usePresetsStore, useUiStore, useControlStore, useAuthStore } from '../../hooks';
 
 export const SideBar = ({ drawerWidth = 240 }) => {
 
     const { presets, setActiveEvent } = usePresetsStore();
     const { isPresetModalOpen } = useUiStore();
-    const { setTemperature, machineIsWorking, machineIsHeating } = useControlStore();
+    const { setTemperature, machineIsWorking, machineIsHeating, machineIsTakingOut } = useControlStore();
 
+    const { user } = useAuthStore(); 
 
     return (
         <Box
@@ -25,7 +26,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
             >
 
                 <Toolbar>
-                    <Typography variant='h6' noWrap component='div' >{`Presets de Victor Martinez`}</Typography>
+                    <Typography variant='h6' noWrap component='div' >{`Presets de ${user.name}`}</Typography>
                 </Toolbar>
                 <Divider />
 
@@ -33,7 +34,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                     {
                         presets.map(text => (
                             <ListItem key={text._id} disablePadding>
-                                <ListItemButton onClick={({ event }) => { setActiveEvent(text), setTemperature(text.temperature) }} disabled={isPresetModalOpen || machineIsWorking || machineIsHeating} >
+                                <ListItemButton onClick={({ event }) => { setActiveEvent(text), setTemperature(text.temperature) }} disabled={isPresetModalOpen || machineIsWorking || machineIsHeating || machineIsTakingOut} >
                                     <ListItemIcon>
                                         <ChevronRight sx={{ fontSize: 35 }} color="primary" />
                                     </ListItemIcon>

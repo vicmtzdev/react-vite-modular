@@ -1,11 +1,38 @@
 import {Link as RouterLink} from 'react-router-dom';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
+import { useAuthStore, useForm } from '../../hooks';
+import { useEffect } from 'react';
+import Swal from 'sweetalert2';
+
+const registerFormFields = {
+  registerName: '',
+  registerEmail: '',
+  registerPassword: '',
+}
 
 export const RegisterPage = () => {
+
+  const { startRegister, errorMessage } = useAuthStore();
+
+  const { registerName, registerEmail, registerPassword, onInputChange: onRegisterInputChange } = useForm(registerFormFields);
+
+  const registerSubmit = (event) => {
+    event.preventDefault();
+    startRegister({ name: registerName, email: registerEmail, password: registerPassword });
+  }
+
+  useEffect(() => {
+
+    if (errorMessage !== undefined) {
+      Swal.fire('Error en la autenticación', errorMessage, 'error');
+    }
+
+  }, [errorMessage])
+
   return (
     <AuthLayout title='Register' >
-      <form>
+      <form onSubmit={registerSubmit} >
 
         <Grid container>
           
@@ -15,6 +42,9 @@ export const RegisterPage = () => {
               type='text' 
               placeholder='name' 
               fullWidth
+              name='registerName'
+              value={registerName}
+              onChange={onRegisterInputChange}
             />
           </Grid>
 
@@ -24,6 +54,9 @@ export const RegisterPage = () => {
               type='email' 
               placeholder='e-mail@gmail.com' 
               fullWidth
+              name='registerEmail'
+              value={registerEmail}
+              onChange={onRegisterInputChange}
             />
           </Grid>
 
@@ -33,12 +66,15 @@ export const RegisterPage = () => {
               type='password' 
               placeholder='password' 
               fullWidth
+              name='registerPassword'
+              value={registerPassword}
+              onChange={onRegisterInputChange}
             />
           </Grid>
 
           <Grid container sx={{ mb: 2, mt: 2 }}>
             <Grid item xs={12}>
-              <Button variant='contained' fullWidth>
+              <Button variant='contained' fullWidth onClick={registerSubmit} >
                 <Typography sx={{ mr: 0.7 }} > Create account </Typography> 
               </Button>
             </Grid>

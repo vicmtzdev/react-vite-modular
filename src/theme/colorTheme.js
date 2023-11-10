@@ -27,5 +27,8 @@ export const colorTheme = createTheme({
         disabled: {
             main: '#E0E0E0'
         },
+        blanco: {
+            main: '#FFFFFF'
+        },
     }
 })
