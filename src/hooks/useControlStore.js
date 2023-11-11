@@ -7,28 +7,29 @@ export const useControlStore = () => {
     const { machineIsHeating, machineIsWorking, machineIsTakingOut, referenceTemperature } = useSelector(state => state.control);
 
 
-    const startHeat = () => {
-        //TODO: Llegar al backend, todo bien...
+    const startHeat = async () => {
+
         dispatch(onMachineIsHeating());
+
     }
 
     const startWork = () => {
-        //TODO: Llegar al backend, todo bien...
+
         dispatch(onMachineIsWorking());
     }
 
     const startTakeOut = () => {
-        //TODO: Llegar al backend, todo bien...
+
         dispatch(onMachineIsTakingOut());
     }
 
     const stopOperation = () => {
-        //TODO: Llegar al backend, todo bien...
+
         dispatch(onMachineIsStopped());
     }
 
     const setTemperature = (payload) => {
-        //TODO: Llegar al backend, todo bien...
+
         dispatch(onSetReferenceTemperature(payload));
     }
 

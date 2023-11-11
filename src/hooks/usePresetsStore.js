@@ -1,10 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { onAddNewEvent, onDeleteEvent, onSetActiveEvent, onSetNullEvent, onUpdateEvent } from '../store';
+import Swal from 'sweetalert2';
+import { modularApi } from '../api';
+import { onAddNewEvent, onDeleteEvent, onLoadEvent, onSetActiveEvent, onSetNullEvent, onUpdateEvent } from '../store';
 
 export const usePresetsStore = () => {
 
     const dispatch = useDispatch();
     const { presets, activePreset } = useSelector(state => state.presets);
+    const { user } = useSelector(state => state.auth);
+
 
     const setActiveEvent = (presetEvent) => {
         dispatch(onSetActiveEvent(presetEvent));
@@ -15,22 +19,61 @@ export const usePresetsStore = () => {
     }
 
     const startSavingEvent = async (presetEvent) => {
-        //TODO: Llegar al backend, todo bien... 
 
-        if (presetEvent._id) {
-            // Actualizando
-            dispatch(onUpdateEvent({ ...presetEvent }));
-        } else {
-            // Creando 
-            dispatch(onAddNewEvent({ _id: new Date().getTime(), ...presetEvent }));
+        try {
+
+            if (presetEvent.id) {
+
+                // Actualizando
+                await modularApi.put(`/presets/${presetEvent.id}`, presetEvent);
+                dispatch(onUpdateEvent({ ...presetEvent, user }));
+                return;
+
+            }
+
+            // Creando
+            const { data } = await modularApi.post('/presets', presetEvent);
+            dispatch(onAddNewEvent({ id: data.preset.id, ...presetEvent, user }));
+
+        } catch (error) {
+            Swal.fire('Error al guardar', error.response.data.msg, 'error');
         }
+
+
     }
 
 
-    const startDeletingEvent = () => {
-        //TODO: Llegar al backend, todo bien...
+    const startDeletingEvent = async () => {
 
-        dispatch(onDeleteEvent());
+        try {
+
+            await modularApi.delete(`/presets/${activePreset.id}`);
+            dispatch(onDeleteEvent());
+
+        } catch (error) {
+
+            Swal.fire('Error al eliminar', error.response.data.msg, 'error');
+
+        }
+
+
+    }
+
+    const startLoadingPresets = async () => {
+
+        try {
+
+            const { data } = await modularApi.get('/presets');
+            dispatch(onLoadEvent(data.presets));
+            //console.log(data.presets);
+
+        } catch (error) {
+
+            console.log(error);
+            console.log('Error cargando eventos');
+
+        }
+
     }
 
     return {
@@ -44,5 +87,6 @@ export const usePresetsStore = () => {
         setNullEvent,
         startSavingEvent,
         startDeletingEvent,
+        startLoadingPresets,
     }
 }

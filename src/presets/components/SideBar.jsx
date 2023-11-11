@@ -33,7 +33,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
                 <List>
                     {
                         presets.map(text => (
-                            <ListItem key={text._id} disablePadding>
+                            <ListItem key={text.id} disablePadding>
                                 <ListItemButton onClick={({ event }) => { setActiveEvent(text), setTemperature(text.temperature) }} disabled={isPresetModalOpen || machineIsWorking || machineIsHeating || machineIsTakingOut} >
                                     <ListItemIcon>
                                         <ChevronRight sx={{ fontSize: 35 }} color="primary" />

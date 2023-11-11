@@ -1,16 +1,16 @@
 import { ArrowBack, DeleteOutline, Edit, PlayArrow, Thermostat, Stop, South, Opacity } from '@mui/icons-material';
 import { Alert, Button, Card, CardActionArea, CardContent, CardMedia, Collapse, Grid, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
+
 import { useControlStore, useCustomTimer, usePresetsStore, useUiStore, useCustomTimerTakeOut } from '../../hooks';
 
 export const PresetView = ({ activePreset }) => {
 
     const { setNullEvent, startDeletingEvent } = usePresetsStore();
     const { openPresetModal } = useUiStore();
-    const { startHeat, stopOperation, startTakeOut, machineIsWorking, machineIsHeating, machineIsTakingOut } = useControlStore();
+    const { startHeat, stopOperation, machineIsWorking, machineIsHeating, machineIsTakingOut } = useControlStore();
     const { minutesLeft, secondsLeft, startTimer } = useCustomTimer();
     const { minutesLeftTakeOut, secondsLeftTakeOut, startTimerTakeOut } = useCustomTimerTakeOut();
-
 
     return (
         <> 

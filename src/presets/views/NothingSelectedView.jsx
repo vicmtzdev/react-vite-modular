@@ -1,5 +1,6 @@
 import { AddOutlined } from '@mui/icons-material';
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography, IconButton } from '@mui/material';
+import { useEffect } from 'react';
 import { usePresetsStore, useUiStore, useControlStore } from '../../hooks';
 
 // const dataFicticia = [
@@ -44,7 +45,7 @@ import { usePresetsStore, useUiStore, useControlStore } from '../../hooks';
 
 export const NothingSelectedView = () => {
 
-    const { presets, setActiveEvent, setNullEvent } = usePresetsStore();
+    const { presets, setActiveEvent, setNullEvent, startLoadingPresets } = usePresetsStore();
     const { openPresetModal } = useUiStore();
     const { setTemperature } = useControlStore();
 
@@ -53,6 +54,13 @@ export const NothingSelectedView = () => {
         openPresetModal();
     }
 
+    useEffect(() => {
+
+        startLoadingPresets();
+
+    }, [])
+
+
     return (
         <>
 
@@ -60,7 +68,7 @@ export const NothingSelectedView = () => {
 
                 {
                     presets.map(card => (
-                        <Grid item xs={3} key={card._id} onClick={({ event }) => { setActiveEvent(card), setTemperature(card.temperature) }}>
+                        <Grid item xs={3} key={card.id} onClick={({ event }) => { setActiveEvent(card), setTemperature(card.temperature) }}>
                             <Card sx={{ maxWidth: 345, maxHeight: 300 }} >
                                 <CardActionArea>
                                     <CardMedia

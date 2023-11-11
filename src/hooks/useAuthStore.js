@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { modularApi } from '../api';
-import { clearErrorMessage, onChecking, onLogin, onLogout } from '../store';
+import { clearErrorMessage, onChecking, onLogin, onLogout, onLogoutPresets, onMachineIsStopped } from '../store';
 
 
 export const useAuthStore = () => {
@@ -75,7 +75,9 @@ export const useAuthStore = () => {
 
     const startLogOut = () => {
         localStorage.clear();
+        dispatch(onLogoutPresets());
         dispatch(onLogout());
+        dispatch(onMachineIsStopped());
     }
 
 
